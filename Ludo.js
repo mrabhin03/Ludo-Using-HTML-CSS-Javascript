@@ -64,7 +64,14 @@ function move_object(object) {
           for (let i = 0; i < newobject.length; i++) {
             if (newobject[i].innerHTML == current) {
               (function (current, object, target) {
+                object.style.transition = "transform 0.1s ease-in-out";
                 setTimeout(function () {
+                  setTimeout(()=>{
+                    object.classList.add("jump")
+                  },10)
+                  setTimeout(()=>{
+                    object.classList.remove("jump")
+                  },100)
                   movement(object, target);
                   rearrage(target);
                   if (current >= player_details[theobject_id]["Player"] + "6") {
@@ -278,31 +285,35 @@ function check_collision(object,ActivePlayer) {
 }
 
 function backtohome(Player_id){
-    delay=110
+    delay=50
     console.log(Player_id)
     object=document.getElementById(Player_id)
-    object.style.transition = "top 0.1s liner, left 0.1s liner";
-    start=player_details[Player_id]["Current_Location"];
-    end=player_details[Player_id]["Initial_Position"]
-    for (let k = start; k >= end; k--) {
-        current=k
-        player_details[Player_id]["Moved"] -= 1;
+    start=player_details[Player_id]["Moved"];
+    end=1
+    for (let k = start; k > end; k--) {
+        current=player_details[Player_id]["Current_Location"]=player_details[Player_id]["Current_Location"]-1
+        if(current<=0){
+          current=player_details[Player_id]["Current_Location"]=52
+        }
+
         for (let i = 0; i < newobject.length; i++) {
           if (newobject[i].innerHTML == current) {
             (function (current, object, target) {
+              object.style.transition = "top .05s ease-in-out, left 0.05s linear";
               setTimeout(function () {
                 object.style.transform = "scale(1)";
+                // target.style.backgroundColor="red"
                 movement(object, target);
                   if (player_details[Player_id]["Initial_Position"] ==current) {
-                    object.style.transition = "top 0.5s ease-in-out, left 0.5s ease-in-out";
                     player_details[Player_id]["Current_Location"]=0
                     player_details[Player_id]["Moved"]=0
                       setTimeout(()=>{
+                        object.style.transition = "top 0.5s ease-in-out, left 0.5s ease-in-out";
                           next_move = true;
                           
                             object.style.top = player_details[Player_id]["Y_Axis"]+ "px";
                             object.style.left= player_details[Player_id]["X_Axis"] + "px";
-                      },500);
+                      },100);
                 }
               }, o * delay);
             })(current, object, newobject[i]);
@@ -348,7 +359,7 @@ function rearrage(object) {
   }
   for (i = 0; i < players.length; i++) {
     thepr = document.getElementById(players[i]);
-    thepr.style.transition = "top 0.4s ease-in-out, left 0.4s ease-in-out, transform 0.5s ease-in-out";
+    thepr.style.transition = "top 0.4s ease-in-out, left 0.4s ease-in-out, transform 0.2s ease-in-out";
     left_value = x + leftof - (players.length + toleft);
     thepr.style.transform = "scale(" + scale + ")";
     thepr.style.left = left_value + dist + "px";

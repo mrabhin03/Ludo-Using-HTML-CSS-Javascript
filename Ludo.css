@@ -105,3 +105,7 @@ body footer{
 .player .player_image{
     width: 100%;
 }
+.player.jump{
+    transform: scale(1.1) !important;
+    z-index: 50;
+}
