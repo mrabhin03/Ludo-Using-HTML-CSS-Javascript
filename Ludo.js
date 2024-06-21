@@ -1,107 +1,122 @@
-Total_player = 4;
+Total_player = 1;
 
 player_details = [];
 
-thenumber = 1;
+thenumber = 5;
 
-next_move = true;
+
+Selected_Player=0;
+move_pattern=['B','R','G','Y'];
+
+
+bgcolorin=10;
+bgcolorout=600
+
+const colors = {"Red":"rgb(207, 0, 0,.2)","Blue":"rgb(0, 114, 207,.25)","Green":"rgb(0, 207, 38,.25)","Yellow":"rgb(230, 242, 0,.25)"}
+
+next_move = false;
 player_box = [];
 player_box[0] = ["player-Red", 41, 25, "R", 2];
 player_box[1] = ["player-Green", 401, 25, "G", 15];
 player_box[2] = ["player-Blue", 41, 390, "B", 41];
 player_box[3] = ["player-Yellow", 401, 390, "Y", 28];
-safe_zone = [2, 15, 28, 41];
+safe_zone = [2, 15,18, 28, 41];
 
 function move_object(object) {
   if (next_move) {
-    object.style.transition = "top .5s ease-in-out, left .5s ease-in-out, transform 0.1s ease-in-out";
-    object.style.transform = "scale(1)";
     theobject_id = object.id;
     next_move = false;
-    newobject = document.querySelectorAll("#box");
     if (player_details[theobject_id]["Status"] == 1) {
+      object.style.transition = "top .5s ease-in-out, left .5s ease-in-out, transform 0.1s ease-in-out";
+      object.style.transform = "scale(1)";
       if (player_details[theobject_id]["Current_Location"] == 0) {
-        player_details[theobject_id]["Current_Location"] = num =
-          player_details[theobject_id]["Initial_Position"];
-        for (i = 0; i < newobject.length; i++) {
-          if (newobject[i].innerHTML == num) {
-            movement(object, newobject[i], num);
-            rearrage(newobject[i]);
+        if(thenumber==6){
+            player_details[theobject_id]["Current_Location"] = num =
+            player_details[theobject_id]["Initial_Position"];
+            newobject=document.getElementById('box-'+num)
+            movement(object, num);
+            rearrage(num);
             setTimeout(()=>{
-                next_move = true;
-            },500)
-            
-            break;
-          }
+              undice(0)
+            },200)
+          player_details[theobject_id]["Moved"] = 1;
+        }else{
+          undice(1)
         }
-        player_details[theobject_id]["Moved"] = 1;
       } else {
-        for (i = 0; i < newobject.length; i++) {
-          if (newobject[i].innerHTML ==player_details[theobject_id]["Current_Location"]) {
-            old_position = newobject[i];
-            break;
-          }
-        }
+        old_position=document.getElementById("box-"+player_details[theobject_id]["Current_Location"])
+        
         object.style.transition = "top .3s ease-in-out, left .3s ease-in-out, transform 0.1s ease-in-out";
         num =
           parseInt(String(player_details[theobject_id]["Current_Location"]).replace(/\D/g,"")) + thenumber;
         o = 0;
         delay = 0;
+        let current;
         start =parseInt(String(player_details[theobject_id]["Current_Location"]).replace(/\D/g,""));
         for (let k = start; k <= num; k++) {
+          
           if (player_details[theobject_id]["Moved"] > 51) {
-            current =
-              player_details[theobject_id]["Player"] +
-              (player_details[theobject_id]["Moved"] - 51);
+              current = player_details[theobject_id]["Player"] + (player_details[theobject_id]["Moved"] - 51);
           } else {
-            current = k;
-            if (k > 52) {
-              current = k - 52;
-            }
+              current = k;
+              if (k > 52) {
+                  current = k - 52;
+              }
           }
           player_details[theobject_id]["Moved"] += 1;
+          let target = document.getElementById("box-" + current);
+          object.style.transition = "transform 0.1s ease-in-out";
+          (function (current,target) {
+              setTimeout(function () {
+                  setTimeout(() => {
+                      object.classList.add("jump");
+                  }, 10);
+      
+                  setTimeout(() => {
+                      object.classList.remove("jump");
+                  }, 100);
 
-          for (let i = 0; i < newobject.length; i++) {
-            if (newobject[i].innerHTML == current) {
-              (function (current, object, target) {
-                object.style.transition = "transform 0.1s ease-in-out";
-                setTimeout(function () {
-                  setTimeout(()=>{
-                    object.classList.add("jump")
-                  },10)
-                  setTimeout(()=>{
-                    object.classList.remove("jump")
-                  },100)
-                  movement(object, target);
-                  rearrage(target);
-                  if (current >= player_details[theobject_id]["Player"] + "6") {
-                    setTimeout(()=>{
-                        next_move = true;
-                    },500)
-                    player_details[theobject_id]["Status"] = 0;
-                  } else {
-                    if (player_details[theobject_id]["Current_Location"] ==current) {
-                        setTimeout(()=>{
-                            next_move = true;
-                        },500)
-                        check_collision(target,theobject_id);
-                    }
+                  console.log()
+                  setTimeout(() => {
+                    target.style.backgroundColor=colors[player_details[theobject_id]["Color"]];
+                }, bgcolorin);
+                  setTimeout(() => {
+                    target.style.backgroundColor="white"
+                  }, bgcolorout);
+      
+                  movement(object, current);
+                  rearrage(current);
+                  if (current >= player_details[theobject_id]["Player"] + 6) {
+                    winner_check(theobject_id)
                   }
+                  if (player_details[theobject_id]["Current_Location"] == current) {
+                    if(check_collision(current, theobject_id)){
+                      undice(0)
+                    }else{
+                      undice(1)
+                    }
                     
-                }, o * delay);
-              })(current, object, newobject[i]);
-              break;
-            }
-            if(o<2){
-                delay = 170;
-            }else{
-                delay=280
-            }
-                
-            
+                  }
+              }, o * delay);
+          })(current,target);
+      
+          if (k < 2) {
+              delay = 170;
+          } else {
+              delay = 280;
           }
+          if (current >= player_details[theobject_id]["Player"] + 6) { 
+            setTimeout(() => {
+                next_move = true;
+            }, 500);
+            player_details[theobject_id]["Status"] = 0;
+            
+            break;
+          }
+      
           o++;
-        }
+      }
+      
         player_details[theobject_id]["Moved"] -= 1;
         player_details[theobject_id]["Current_Location"] = current;
       }
@@ -111,32 +126,33 @@ function move_object(object) {
   }
 }
 
-function movement(object, position) {
+function movement(object, position_id) {
+  position=document.getElementById("box-"+position_id)
   const parentRect = position.parentElement.getBoundingClientRect();
   const elementRect = position.getBoundingClientRect();
   board=document.body
-  if (position.innerHTML == "R6") {
+  if (position_id == "R6") {
 
     x = elementRect.left - parentRect.left+240;
     y = elementRect.top - parentRect.top;
     board = document.getElementById("board");
     topof = board.getBoundingClientRect().top+210;
 
-  } else if (position.innerHTML == "G6") {
+  } else if (position_id == "G6") {
 
     x = elementRect.left - parentRect.left+215;
     y = elementRect.top - parentRect.top;
     board = document.getElementById("board");
     topof = board.getBoundingClientRect().top+230;
 
-  } else if (position.innerHTML == "B6") {
+  } else if (position_id == "B6") {
 
     x = elementRect.left - parentRect.left+215;
     y = elementRect.top - parentRect.top;
     board = document.getElementById("board");
     topof = board.getBoundingClientRect().top+180;
 
-  } else if (position.innerHTML == "Y6") {
+  } else if (position_id == "Y6") {
 
     x = elementRect.left - parentRect.left+192;
     y = elementRect.top - parentRect.top;
@@ -213,7 +229,7 @@ function player_create() {
       color = player_box[box][0].split("-");
       const Player_image = document.createElement("img");
       Player_image.className = "player_image";
-      Player_image.src = "Images/" + color[1] + ".png";
+      Player_image.src = "Images/Player/" + color[1] + ".png";
 
       Player.appendChild(Player_image);
       document.body.appendChild(Player);
@@ -233,18 +249,21 @@ function player_create() {
         X_Axis: x + leftof,
         Moved: 0,
         Status: 1,
+        Color:color[1],
       };
       theplayer++;
     }
   }
 }
 
-function check_collision(object,ActivePlayer) {
+function check_collision(object_id,ActivePlayer) {
+  Main_Flag=0;
   num_players = Object.keys(player_details).length;
   object_Collied = [];
+  object=document.getElementById("box-"+object_id)
   for (i = 0; i < num_players; i++) {
     id = "P" + i;
-    if (player_details[id]["Current_Location"] == object.innerHTML) {
+    if (player_details[id]["Current_Location"] == object_id) {
       flag = 1;
       object_Collied.push(id);
     }
@@ -252,35 +271,29 @@ function check_collision(object,ActivePlayer) {
   if (object_Collied.length == 1) {
     return false;
   } else {
-    console.log("Collision Deteced: " + object_Collied);
     flag = 0;
     for (k = 0; k < safe_zone.length; k++) {
-      if (safe_zone[k] == object.innerHTML) {
+      if (safe_zone[k] == object_id) {
         flag = 1;
         break;
       }
     }
     if (flag == 0) {
-      console.log("Position not safe")
       for(k=0;k<object_Collied.length;k++){
         if(player_details[ActivePlayer]["Player"]!=player_details[object_Collied[k]]["Player"]){
             backtohome(player_details[object_Collied[k]]["ID"])
-            const parentRect = object.parentElement.getBoundingClientRect();
-            const elementRect = object.getBoundingClientRect();
-            x = elementRect.left - parentRect.left;
-            y = elementRect.top - parentRect.top;
-            board = document.getElementById("board");
-            leftof = board.getBoundingClientRect().left+6;
-            topof = board.getBoundingClientRect().top + 4 - 12;
-            play=document.getElementById(player_details[ActivePlayer]["ID"]);
-            play.style.top = y + topof + "px";
-            play.style.left = x + leftof + "px";
-            play.style.transform = "scale(1)"
+            rearrage(object_id)
+            Main_Flag=1;
         }
       }
       
     }
-    return true
+    if(Main_Flag==1){
+      return true;
+    }else{
+      return false;
+    }
+    
   }
 }
 
@@ -295,46 +308,47 @@ function backtohome(Player_id){
         if(current<=0){
           current=player_details[Player_id]["Current_Location"]=52
         }
-
-        for (let i = 0; i < newobject.length; i++) {
-          if (newobject[i].innerHTML == current) {
+        target=document.getElementById("box-"+current);
             (function (current, object, target) {
               object.style.transition = "top .05s ease-in-out, left 0.05s linear";
               setTimeout(function () {
                 object.style.transform = "scale(1)";
-                // target.style.backgroundColor="red"
-                movement(object, target);
+                setTimeout(() => {
+                  target.style.backgroundColor=colors[player_details[Player_id]["Color"]];
+              }, bgcolorin);
+                setTimeout(() => {
+                  target.style.backgroundColor="white";
+                }, bgcolorout);
+                movement(object, current);
                   if (player_details[Player_id]["Initial_Position"] ==current) {
                     player_details[Player_id]["Current_Location"]=0
                     player_details[Player_id]["Moved"]=0
                       setTimeout(()=>{
                         object.style.transition = "top 0.5s ease-in-out, left 0.5s ease-in-out";
-                          next_move = true;
                           
                             object.style.top = player_details[Player_id]["Y_Axis"]+ "px";
                             object.style.left= player_details[Player_id]["X_Axis"] + "px";
                       },100);
                 }
               }, o * delay);
-            })(current, object, newobject[i]);
-            break;
-          }          
-        }
+            })(current, object, target);
+            
         o++;
       }
 }
 
 
 
-function rearrage(object) {
+function rearrage(objectid) {
   num_players = Object.keys(player_details).length;
   players = [];
   for (i = 0; i < num_players; i++) {
     id = "P" + i;
-    if (player_details[id]["Current_Location"] == object.innerHTML) {
+    if (player_details[id]["Current_Location"] == objectid) {
          players.push(id);
     }
   }
+  object=document.getElementById("box-"+objectid);
 
   parentRect = object.parentElement.getBoundingClientRect();
   elementRect = object.getBoundingClientRect();
@@ -365,5 +379,126 @@ function rearrage(object) {
     thepr.style.left = left_value + dist + "px";
     dist += space;
   }
+}
+
+
+function winner_check(Player_id){
+  num_players = Object.keys(player_details).length;
+  flag=0
+  for (i = 0; i < num_players; i++) {
+    id = "P" + i;
+    if (player_details[Player_id]["Player"] == player_details[id]["Player"]) {
+         if(player_details[id]["Current_Location"]!=(player_details[id]["Player"]+"6")){
+          flag=1;
+        }
+    }
+  }
+  if(flag==0){
+    console.log(player_details[Player_id]["Color"]+" Player Won")
+  }
+}
+
+
+
+function Player_selection(){
+  num_players = Object.keys(player_details).length;
+  flag=0
+  var Color
+  for(k=0;k<num_players;k++){
+    id="P"+k;
+    if(player_details[id]['Player']==move_pattern[Selected_Player]){
+      document.getElementById(id).style.pointerEvents= "all";
+      Color=player_details[id]['Color']
+      flag=1
+    }
+    else{
+      document.getElementById(id).style.pointerEvents= "none";
+      document.getElementById("home-"+player_details[id]['Color']).classList.remove("Active")
+    }
+  }
+  if(flag==1){
+    document.getElementById("home-"+Color).classList.add("Active")
+  }else{
+    Selected_Player++;
+    if(Selected_Player>=move_pattern.length){
+      Selected_Player=0
+    }
+    Player_selection()
+  }
+}
+
+
+function undice(Mode){
+  if(Mode==1 && thenumber!=6){
+    Selected_Player++;
+    if(Selected_Player>=move_pattern.length){
+      Selected_Player=0
+    }
+  }
+  document.getElementsByClassName("dice-throw")[0].style.backgroundColor="red"
+  Player_selection()
+}
+
+function dice(){
+  if(!next_move){
+    thenumber=Math.floor(Math.random() * 6) + 1;
+    
+    diceset(thenumber);
+    setTimeout(()=>{
+      document.getElementById("dice").src="Images/Dice/D"+thenumber+".png"
+      next_move = true;
+      flag=0;
+      if(thenumber!=6){
+        for(k=0;k<num_players;k++){
+          id="P"+k;
+          if(player_details[id]['Player']==move_pattern[Selected_Player]){
+            if(player_details[id]['Moved']!=0){
+              flag=1;
+              document.getElementById(id).style.pointerEvents= "all";
+            }else{
+              document.getElementById(id).style.pointerEvents= "none";
+            }
+          }
+        }
+        if(flag==0){
+          next_move=false
+          Selected_Player++;
+          if(Selected_Player>=move_pattern.length){
+            Selected_Player=0
+          }
+          document.getElementsByClassName("dice-throw")[0].style.backgroundColor="red"
+          Player_selection()
+        }
+      }
+      
+    },1000)
+    
+  }
+}
+
+function diceset(final_num){
+  document.getElementsByClassName("dice-throw")[0].style.backgroundColor="rgb(172, 234, 177)"
+  dice_spin=document.getElementById("dice-spin")
+  dice_image=document.getElementById("dice")
+  dice_spin.classList.add("Spin");
+  settr=0
+  for(k=0;k<=12;k++){
+    (function (dice_spin,dice_image,k,settr) {
+      setTimeout(()=>{
+        do{
+          image_t=Math.floor(Math.random() * 6) + 1;
+        }while(settr==image_t);
+        
+        if(k>10){
+          image_t=final_num
+        }
+        dice_image.src="Images/Dice/D"+image_t+".png";
+        if(k==12){
+          dice_spin.classList.remove("Spin")
+        }
+      },k*70)
+      
+    })(dice_spin,dice_image,k,settr)
+  };
 }
 

@@ -7,11 +7,14 @@
     <title>Ludo</title>
 </head>
 <body>
-    <header> Welcome</header>
+    <header >Welcome</header>
     <section>
+        <div class="dice-throw" onclick="dice()">
+            <div id="dice-spin" class="the-dice"><img id="dice" src="Images/Dice/D3.png" alt="" srcset=""></div>
+        </div>
         <div class="ludo-board" id="board">
 
-            <div class="home-base red">
+            <div id="home-Red" class="home-base red">
                 <div class="base">
                     <div id="player-Red"></div>
                     <div id="player-Red"></div>
@@ -21,11 +24,11 @@
             </div>
 
 
-            <div id="box">12</div>
-            <div id="box">13</div>
-            <div id="box">14</div>
+            <div id="box-12">12</div>
+            <div id="box-13">13</div>
+            <div id="box-14">14</div>
 
-            <div class="home-base green">
+            <div  id="home-Green" class="home-base green">
                 <div class="base">
                     <div id="player-Green"></div>
                     <div id="player-Green"></div>
@@ -34,86 +37,86 @@
                 </div>
             </div>
 
-            <div id="box">11</div>
+            <div id="box-11">11</div>
 
-            <div  class="green" id="box">G1</div>
-            <div  class="green" id="box">15</div>
+            <div  class="green" id="box-G1">G1</div>
+            <div  class="green" id="box-15">15</div>
 
-            <div id="box">10</div>
+            <div id="box-10">10</div>
 
-            <div id="box" class="green">G2</div>
+            <div id="box-G2" class="green">G2</div>
 
-            <div id="box">16</div>
-            <div id="box">9</div>
+            <div id="box-16">16</div>
+            <div id="box-9">9</div>
 
-            <div id="box" class="green">G3</div>
+            <div id="box-G3" class="green">G3</div>
 
-            <div id="box">17</div>
-            <div id="box">8</div>
+            <div id="box-17">17</div>
+            <div id="box-8">8</div>
 
-            <div id="box" class="green">G4</div>
+            <div id="box-G4" class="green">G4</div>
 
-            <div id="box">18</div>
-            <div id="box">7</div>
+            <div id="box-18">18</div>
+            <div id="box-7">7</div>
 
-            <div id="box" class="green">G5</div>
+            <div id="box-G5" class="green">G5</div>
 
-            <div id="box">19</div>
-            <div id="box">1</div>
+            <div id="box-19">19</div>
+            <div id="box-1">1</div>
 
-            <div id="box" class="red">2</div>
+            <div id="box-2" class="red">2</div>
 
-            <div id="box">3</div>
-            <div id="box">4</div>
-            <div id="box">5</div>
-            <div id="box">6</div>
+            <div id="box-3">3</div>
+            <div id="box-4">4</div>
+            <div id="box-5">5</div>
+            <div id="box-6">6</div>
 
             <div class="winner-base">
                 <div class="win">
-                    <div id="box" class="green">G6</div>
-                    <div id="box" class="yellow">Y6</div>
-                    <div id="box" class="red">R6</div>
-                    <div id="box" class="blue">B6</div>
+                    <div id="box-G6" class="green">G6</div>
+                    <div id="box-Y6" class="yellow">Y6</div>
+                    <div id="box-R6" class="red">R6</div>
+                    <div id="box-B6" class="blue">B6</div>
                 </div>
             </div>
             
-            <div id="box">20</div>
-            <div id="box">21</div>
-            <div id="box">22</div>
-            <div id="box">23</div>
-            <div id="box">24</div>
-            <div id="box">25</div>
-            <div id="box">52</div>
+            <div id="box-20">20</div>
+            <div id="box-21">21</div>
+            <div id="box-22">22</div>
+            <div id="box-23">23</div>
+            <div id="box-24">24</div>
+            <div id="box-25">25</div>
+            <div id="box-52">52</div>
 
-            <div id="box" class="red">R1</div>
-            <div id="box" class="red">R2</div>
-            <div id="box" class="red">R3</div>
-            <div id="box" class="red">R4</div>
-            <div id="box" class="red">R5</div>
-            <div id="box" class="yellow">Y5</div>
-            <div id="box" class="yellow">Y4</div>
-            <div id="box" class="yellow">Y3</div>
-            <div id="box" class="yellow">Y2</div>
-            <div id="box" class="yellow">Y1</div>
+            <div id="box-R1" class="red">R1</div>
+            <div id="box-R2" class="red">R2</div>
+            <div id="box-R3" class="red">R3</div>
+            <div id="box-R4" class="red">R4</div>
+            <div id="box-R5" class="red">R5</div>
+            <div id="box-Y5" class="yellow">Y5</div>
+            <div id="box-Y4" class="yellow">Y4</div>
+            <div id="box-Y3" class="yellow">Y3</div>
+            <div id="box-Y2" class="yellow">Y2</div>
+            <div id="box-Y1" class="yellow">Y1</div>
 
-            <div id="box">26</div>
-            <div id="box">51</div>
-            <div id="box">50</div>
-            <div id="box">49</div>
-            <div id="box">48</div>
-            <div id="box">47</div>
-            <div id="box">46</div>
-            <div id="box">32</div>
-            <div id="box">31</div>
-            <div id="box">30</div>
-            <div id="box">29</div>
+            <div id="box-26">26</div>
+            <div id="box-51">51</div>
+            <div id="box-50">50</div>
+            <div id="box-49">49</div>
+            <div id="box-48">48</div>
+            <div id="box-47">47</div>
+            <div id="box-46">46</div>
+            <div id="box-32">32</div>
+            <div id="box-31">31</div>
+            <div id="box-30">30</div>
+            <div id="box-29">29</div>
 
-            <div id="box" class="yellow">28</div>
+            <div id="box-28" class="yellow">28</div>
 
-            <div id="box">27</div>
+            <div id="box-27">27</div>
 
 
-            <div class="home-base blue">
+            <div  id="home-Blue" class="home-base blue">
                 <div class="base">
                     <div id="player-Blue"></div>
                     <div id="player-Blue"></div>
@@ -123,12 +126,12 @@
             </div>
 
 
-            <div id="box">45</div>
-            <div id="box" class="blue">B5</div>
-            <div id="box">33</div>
+            <div id="box-45">45</div>
+            <div id="box-B5" class="blue">B5</div>
+            <div id="box-33">33</div>
 
 
-            <div class="home-base yellow">
+            <div  id="home-Yellow" class="home-base yellow">
                 <div class="base">
                     <div id="player-Yellow"></div>
                     <div id="player-Yellow"></div>
@@ -138,29 +141,29 @@
             </div>
 
 
-            <div id="box">44</div>
+            <div id="box-44">44</div>
 
-            <div id="box" class="blue">B4</div>
+            <div id="box-B4" class="blue">B4</div>
 
-            <div id="box">34</div>
-            <div id="box">43</div>
+            <div id="box-34">34</div>
+            <div id="box-43">43</div>
 
-            <div id="box" class="blue">B3</div>
+            <div id="box-B3" class="blue">B3</div>
 
-            <div id="box">35</div>
-            <div id="box">42</div>
+            <div id="box-35">35</div>
+            <div id="box-42">42</div>
 
-            <div id="box" class="blue">B2</div>
+            <div id="box-B2" class="blue">B2</div>
 
-            <div id="box">36</div>
+            <div id="box-36">36</div>
 
-            <div id="box" class="blue">41</div>
-            <div id="box" class="blue">B1</div>
+            <div id="box-41" class="blue">41</div>
+            <div id="box-B1" class="blue">B1</div>
 
-            <div id="box">37</div>
-            <div id="box">40</div>
-            <div id="box">39</div>
-            <div id="box">38</div>
+            <div id="box-37">37</div>
+            <div id="box-40">40</div>
+            <div id="box-39">39</div>
+            <div id="box-38">38</div>
         </div>
     </section>
     <footer></footer>
@@ -168,5 +171,13 @@
 <script src="Ludo.js"></script>
 <script>
     player_create()
+    Player_selection()
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                dice()
+            }
+        });
+    });
 </script>
 </html>
