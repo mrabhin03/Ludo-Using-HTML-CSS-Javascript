@@ -7,7 +7,7 @@
     <title>Ludo</title>
 </head>
 <body>
-    <header >Welcome</header>
+    <header >Welcome <button onclick="pop_array()">BU</button></header>
     <section>
         <div class="dice-throw" onclick="dice()">
             <div id="dice-spin" class="the-dice"><img id="dice" src="Images/Dice/D3.png" alt="" srcset=""></div>
@@ -21,6 +21,7 @@
                     <div id="player-Red"></div>
                     <div id="player-Red"></div>
                 </div>
+                <p style="position: absolute;" id="player-Red-Title"></p>
             </div>
 
 
@@ -35,6 +36,7 @@
                     <div id="player-Green"></div>
                     <div id="player-Green"></div>
                 </div>
+                <p style="position: absolute;" id="player-Green-Title"></p>
             </div>
 
             <div id="box-11">11</div>
@@ -123,6 +125,7 @@
                     <div id="player-Blue"></div>
                     <div id="player-Blue"></div>
                 </div>
+                <p style="position: absolute;" id="player-Blue-Title"></p>
             </div>
 
 
@@ -138,6 +141,7 @@
                     <div id="player-Yellow"></div>
                     <div id="player-Yellow"></div>
                 </div>
+                <p style="position: absolute;" id="player-Yellow-Title"></p>
             </div>
 
 
@@ -170,8 +174,8 @@
 </body>
 <script src="Ludo.js"></script>
 <script>
-    player_create()
-    Player_selection()
+    player_numbers()
+    
     document.addEventListener('DOMContentLoaded', (event) => {
         document.addEventListener('keydown', function(event) {
             if (event.code === 'Space') {

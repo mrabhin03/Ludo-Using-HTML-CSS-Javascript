@@ -42,7 +42,7 @@ body footer{
 .ludo-board > div{
     box-shadow: 0 0 0 .4px rgba(0, 0, 0, 0.936);
     transition: background-color .3s ease-in-out;
-    color: transparent;
+    /* color: transparent; */
     pointer-events: none;
 }
 
@@ -51,6 +51,9 @@ body footer{
     grid-column: span 6;
     display: grid;
     place-items: center;
+}
+.ludo-board .home-base p{
+    font-family: serif;
 }
 .ludo-board .home-base .base{
     width: 70%;
@@ -94,13 +97,15 @@ body footer{
 }
 @keyframes blink {
     0%{
+        border: 3px solid transparent;
         filter: contrast(100%) brightness(100%);
     }
     50%{
         filter: contrast(90%) brightness(70%);
+        border: 3px solid rgb(0, 0, 0);
     }
     100%{
-        
+        border: 3px solid transparent;
         filter: contrast(100%) brightness(100%);
     }
 }
@@ -135,6 +140,7 @@ body footer{
 }
 .player .player_image{
     width: 100%;
+    filter: drop-shadow(2px 2px 1px black);
 }
 .player.jump{
     transform: scale(1.1) !important;
