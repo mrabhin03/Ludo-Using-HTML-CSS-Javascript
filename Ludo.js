@@ -6,7 +6,7 @@ thenumber = 5;
 
 
 Selected_Player=0;
-move_pattern=['B','R','G','Y'];
+move_pattern=['B','R'];
 
 
 bgcolorin=10;
@@ -170,42 +170,46 @@ function movement(object, position_id) {
   object.style.left = x + leftof + "px";
 }
 
-window.onresize = function () {
-  object = document.querySelectorAll(".player");
-  newobject = document.querySelectorAll("#box");
-  for (i = 0; i < object.length; i++) {
-    object[i].style.transition = "all 0s ease-in-out";
 
-    board = document.getElementById("board");
-    if (player_details[object[i].id]["Current_Location"] == 0) {
-      playersbox = document.querySelectorAll("#player-red");
-      const parentRect = playersbox[i].parentElement.getBoundingClientRect();
-      const elementRect = playersbox[i].getBoundingClientRect();
-      x = elementRect.left - parentRect.left;
-      y = elementRect.top - parentRect.top;
-      leftof = board.getBoundingClientRect().left + 40;
-      topof = board.getBoundingClientRect().top + 40;
-    } else {
-      for (k = 0; k < newobject.length; k++) {
-        if (
-          newobject[k].innerHTML ==
-          player_details[object[i].id]["Current_Location"]
-        ) {
-          position = newobject[k];
+
+window.onresize = function () {
+  num_players = Object.keys(player_details).length;
+  for(ty=0;ty<num_players;ty++){
+    id="P"+ty;
+    object=document.getElementById(id);
+    object.style.transition = "all 0s";
+    if(player_details[id]['Current_Location']!=0){
+      Position=player_details[id]['Current_Location'];
+      movement(object,Position)
+    }else{
+      playersbox = document.querySelectorAll("#player-" + player_details[id]['Color']);
+      thheseleced_box=playersbox[player_details[id]['Position_Num']]
+
+      for (let i = 0; i < Player_values.length; i++) {
+        if (Player_values[i][0] === "player-" + player_details[id]['Color']) {
+          box=i;
+          break;
         }
-      }
-      const parentRect = position.parentElement.getBoundingClientRect();
-      const elementRect = position.getBoundingClientRect();
-      x = elementRect.left - parentRect.left;
-      y = elementRect.top - parentRect.top;
-      leftof = board.getBoundingClientRect().left + 4;
-      topof = board.getBoundingClientRect().top + 4;
     }
 
-    object[i].style.top = y + topof + "px";
-    object[i].style.left = x + leftof + "px";
+      parentRect = thheseleced_box.parentElement.getBoundingClientRect();
+      elementRect = thheseleced_box.getBoundingClientRect();
+
+      x = elementRect.left - parentRect.left;
+      y = elementRect.top - parentRect.top;
+
+      board = document.getElementById("board");
+      leftof = board.getBoundingClientRect().left + Player_values[box][1];
+      topof = board.getBoundingClientRect().top + Player_values[box][2];
+
+      object.style.top = y + topof + "px";
+      object.style.left = x + leftof + "px";
+
+    }
   }
 };
+
+
 
 function player_numbers(){
   for (let j = 0; j < move_pattern.length; j++) {
@@ -226,6 +230,7 @@ function player_create() {
     playersbox = document.querySelectorAll("#" + Player_values[box][0]);
     play_value=document.getElementById("player-"+color[1]+"-Title").innerHTML="Player"+(box+1);
     added_player.push("Player"+(box+1))
+    temp_num=0
     for (i = 0; i < playersbox.length; i++) {
       const parentRect = playersbox[i].parentElement.getBoundingClientRect();
       const elementRect = playersbox[i].getBoundingClientRect();
@@ -254,6 +259,7 @@ function player_create() {
       id = "P" + theplayer;
       player_details[id] = {
         ID: id,
+        Position_Num:temp_num,
         Player: Player_values[box][3],
         Player_Name:"Player"+(box+1),
         Initial_Position: Player_values[box][4],
@@ -265,6 +271,7 @@ function player_create() {
         Color:color[1],
       };
       theplayer++;
+      temp_num++;
     }
   }
   Player_selection()
