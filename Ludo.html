@@ -7,14 +7,22 @@
     <title>Ludo</title>
 </head>
 <body>
-    <header >Welcome </header>
+    <header >Ludo</header>
     <section>
+        <div id="results-out" class="results-main">
+            <div class="results">
+                <h5>Result</h5>
+                <table class="the-result" id="result_out">
+                </table>
+            </div>
+        </div>
         <div class="dice-throw" onclick="dice()">
             <div id="dice-spin" class="the-dice"><img id="dice" src="Images/Dice/D3.png" alt="" srcset=""></div>
         </div>
         <div class="ludo-board" id="board">
 
             <div id="home-Red" class="home-base red">
+                <div class="win-image" id="Red-Win"></div>
                 <div class="base">
                     <div id="player-Red"></div>
                     <div id="player-Red"></div>
@@ -26,10 +34,11 @@
 
 
             <div id="box-12">12</div>
-            <div id="box-13">13</div>
+            <div id="box-13"><ion-icon name="arrow-down"></ion-icon></div>
             <div id="box-14">14</div>
 
             <div  id="home-Green" class="home-base green">
+                <div class="win-image" id="Green-Win"></div>
                 <div class="base">
                     <div id="player-Green"></div>
                     <div id="player-Green"></div>
@@ -88,7 +97,7 @@
             <div id="box-23">23</div>
             <div id="box-24">24</div>
             <div id="box-25">25</div>
-            <div id="box-52">52</div>
+            <div id="box-52"><ion-icon name="arrow-forward-outline"></ion-icon></div>
 
             <div id="box-R1" class="red">R1</div>
             <div id="box-R2" class="red">R2</div>
@@ -101,7 +110,7 @@
             <div id="box-Y2" class="yellow">Y2</div>
             <div id="box-Y1" class="yellow">Y1</div>
 
-            <div id="box-26">26</div>
+            <div id="box-26"><ion-icon name="arrow-back-outline"></ion-icon></div>
             <div id="box-51">51</div>
             <div id="box-50">50</div>
             <div id="box-49">49</div>
@@ -119,6 +128,7 @@
 
 
             <div  id="home-Blue" class="home-base blue">
+                <div class="win-image" id="Blue-Win"></div>
                 <div class="base">
                     <div id="player-Blue"></div>
                     <div id="player-Blue"></div>
@@ -135,6 +145,7 @@
 
 
             <div  id="home-Yellow" class="home-base yellow">
+                <div class="win-image" id="Yellow-Win"></div>
                 <div class="base">
                     <div id="player-Yellow"></div>
                     <div id="player-Yellow"></div>
@@ -166,7 +177,7 @@
 
             <div id="box-37">37</div>
             <div id="box-40">40</div>
-            <div id="box-39">39</div>
+            <div id="box-39"><ion-icon name="arrow-up-outline"></ion-icon></div>
             <div id="box-38">38</div>
         </div>
     </section>
@@ -174,8 +185,9 @@
 </body>
 <script src="Ludo.js"></script>
 <script>
+    // alert(window.innerHeight+" "+window.innerWidth)
     player_numbers()
-    
+    thescreensize()
     document.addEventListener('DOMContentLoaded', (event) => {
         document.addEventListener('keydown', function(event) {
             if (event.code === 'Space') {
@@ -184,4 +196,6 @@
         });
     });
 </script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </html>

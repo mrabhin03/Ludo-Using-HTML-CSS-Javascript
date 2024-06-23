@@ -4,17 +4,23 @@ player_details = [];
 
 thenumber = 5;
 
+Won=0;
+
+heigth_value=700;
+width_value=620;
+
 
 Selected_Player=0;
-move_pattern=['B','R'];
+move_pattern=['B','R','G','Y'];
 
 
 bgcolorin=10;
 bgcolorout=600
 
-const colors = {"Blue":"rgb(0, 114, 207,.25)","Red":"rgb(207, 0, 0,.2)","Green":"rgb(0, 207, 38,.25)","Yellow":"rgb(230, 242, 0,.25)"}
+const colors = {"Blue":"rgb(200, 220, 270)","Red":"rgb(270, 200, 200)","Green":"rgb(200, 270, 238)","Yellow":"rgb(230, 242, 200)"}
 
 next_move = false;
+dice_throw=true
 
 var result=[];
 var added_player=[]
@@ -22,11 +28,11 @@ var added_player=[]
 Player_values=[];
 
 player_box = [];
-player_box[0] = ["player-Red", 41, 25, "R", 2];
-player_box[1] = ["player-Blue", 41, 390, "B", 41];
-player_box[2] = ["player-Green", 401, 25, "G", 15];
-player_box[3] = ["player-Yellow", 401, 390, "Y", 28];
-safe_zone = [2, 15,18, 28, 41];
+player_box[0] = ["player-Red", 54, 38, "R", 2, 36, 26];
+player_box[1] = ["player-Blue", 54, 400, "B", 41, 36, 224];
+player_box[2] = ["player-Green", 414, 38, "G", 15, 234, 26];
+player_box[3] = ["player-Yellow", 414, 400, "Y", 28, 234, 224];
+safe_zone = [2,10, 15,23, 28,36, 41,49];
 
 function move_object(object) {
   if (next_move) {
@@ -41,10 +47,10 @@ function move_object(object) {
             player_details[theobject_id]["Initial_Position"];
             newobject=document.getElementById('box-'+num)
             movement(object, num);
-            rearrage(num);
             setTimeout(()=>{
-              undice(0)
-            },200)
+              undice(0);
+              rearrage(num);
+            },500)
           player_details[theobject_id]["Moved"] = 1;
         }else{
           undice(1)
@@ -130,59 +136,88 @@ function movement(object, position_id) {
   const elementRect = position.getBoundingClientRect();
   board=document.body
   if (position_id == "R6") {
-
-    x = elementRect.left - parentRect.left+240;
-    y = elementRect.top - parentRect.top;
+    if(window.innerWidth<=width_value || window.innerHeight<=heigth_value){
+      x = elementRect.left - parentRect.left+142;
+      y = elementRect.top - parentRect.top+127;
+    }else{
+      x = elementRect.left - parentRect.left+245;
+      y = elementRect.top - parentRect.top+215;
+    }
     board = document.getElementById("board");
-    topof = board.getBoundingClientRect().top+210;
+    topof = board.getBoundingClientRect().top;
 
   } else if (position_id == "G6") {
 
-    x = elementRect.left - parentRect.left+215;
-    y = elementRect.top - parentRect.top;
+    if(window.innerWidth<=width_value || window.innerHeight<=heigth_value){
+      x = elementRect.left - parentRect.left+131;
+      y = elementRect.top - parentRect.top+139;
+    }else{
+      x = elementRect.left - parentRect.left+225;
+      y = elementRect.top - parentRect.top+250;
+    }
     board = document.getElementById("board");
-    topof = board.getBoundingClientRect().top+230;
+    topof = board.getBoundingClientRect().top;
 
   } else if (position_id == "B6") {
+    if(window.innerWidth<=width_value || window.innerHeight<=heigth_value){
+      x = elementRect.left - parentRect.left+132;
+      y = elementRect.top - parentRect.top+112;
 
-    x = elementRect.left - parentRect.left+215;
-    y = elementRect.top - parentRect.top;
+    }else{
+      x = elementRect.left - parentRect.left+225;
+      y = elementRect.top - parentRect.top+190;
+    }
     board = document.getElementById("board");
-    topof = board.getBoundingClientRect().top+180;
+    topof = board.getBoundingClientRect().top;
 
   } else if (position_id == "Y6") {
-
-    x = elementRect.left - parentRect.left+192;
-    y = elementRect.top - parentRect.top;
+    if(window.innerWidth<=width_value || window.innerHeight<=heigth_value){
+      x = elementRect.left - parentRect.left+115;
+      y = elementRect.top - parentRect.top+127;
+    }else{
+      x = elementRect.left - parentRect.left+203;
+      y = elementRect.top - parentRect.top+215;
+    }
     board = document.getElementById("board");
-    topof = board.getBoundingClientRect().top+210;
+    topof = board.getBoundingClientRect().top;
 
   } else {
     inger = 4;
     x = elementRect.left - parentRect.left;
     y = elementRect.top - parentRect.top;
     board = document.getElementById("board");
-    leftof = board.getBoundingClientRect().left+6;
-    topof = board.getBoundingClientRect().top + inger - 12;
+    if(window.innerWidth<=width_value || window.innerHeight<=heigth_value){
+      leftof = board.getBoundingClientRect().left+2;
+      topof = board.getBoundingClientRect().top + inger - 9;
+    }else{
+      leftof = board.getBoundingClientRect().left+6;
+      topof = board.getBoundingClientRect().top + inger - 12;
+    }
   }
 
   object.style.top = y + topof + "px";
   object.style.left = x + leftof + "px";
+  
 }
 
 
 
-window.onresize = function () {
+window.onresize=thescreensize; 
+function thescreensize() {
+  home_t=document.getElementById("home-Red")
+  width_y=home_t.offsetWidth
+  base=document.querySelectorAll(".win-image")
+  for(jk=0;jk<base.length;jk++){
+  base[jk].style.width=width_y+"px"
+  base[jk].style.height=width_y+"px"
+  }
+
   num_players = Object.keys(player_details).length;
   for(ty=0;ty<num_players;ty++){
     id="P"+ty;
     object=document.getElementById(id);
     object.style.transition = "all 0s";
-    if(player_details[id]['Current_Location']!=0){
-      Position=player_details[id]['Current_Location'];
-      movement(object,Position)
-    }else{
-      playersbox = document.querySelectorAll("#player-" + player_details[id]['Color']);
+    playersbox = document.querySelectorAll("#player-" + player_details[id]['Color']);
       thheseleced_box=playersbox[player_details[id]['Position_Num']]
 
       for (let i = 0; i < Player_values.length; i++) {
@@ -199,11 +234,28 @@ window.onresize = function () {
       y = elementRect.top - parentRect.top;
 
       board = document.getElementById("board");
-      leftof = board.getBoundingClientRect().left + Player_values[box][1];
-      topof = board.getBoundingClientRect().top + Player_values[box][2];
+      if(window.innerWidth<=width_value || window.innerHeight<=heigth_value){
+        leftof = board.getBoundingClientRect().left + Player_values[box][5];
+        topof = board.getBoundingClientRect().top + Player_values[box][6];
+        
+      }else{
+        leftof = board.getBoundingClientRect().left + Player_values[box][1];
+        topof = board.getBoundingClientRect().top + Player_values[box][2];
+      }
 
-      object.style.top = y + topof + "px";
-      object.style.left = x + leftof + "px";
+      player_details[id]['Y_Axis']=y+topof;
+      player_details[id]['X_Axis']=x+leftof;
+      
+
+    if(player_details[id]['Current_Location']!=0){
+      Position=player_details[id]['Current_Location'];
+      movement(object,Position)
+      object.style.transition = "all 0s";
+      rearrage(player_details[id]['Current_Location'])
+      console.log(player_details[id]['Current_Location'])
+    }else{
+      object.style.top = player_details[id]['Y_Axis'] + "px";
+      object.style.left = player_details[id]['X_Axis'] + "px";
 
     }
   }
@@ -272,9 +324,11 @@ function player_create() {
       };
       theplayer++;
       temp_num++;
+      object=document.getElementById(id)
     }
   }
   Player_selection()
+  thescreensize()
 }
 
 function pop_array(ThePR,Name){
@@ -384,7 +438,8 @@ function rearrage(objectid) {
   parentRect = object.parentElement.getBoundingClientRect();
   elementRect = object.getBoundingClientRect();
   board = document.getElementById("board");
-  leftof = board.getBoundingClientRect().left + 4;
+  
+
   dist = 0;
   if (players.length == 1) {
     scale = 1;
@@ -400,11 +455,18 @@ function rearrage(objectid) {
     scale = .8;
     hie = players.length + 2;
     space = 6;
-    toleft = players.length-1;
+    toleft = players.length-2;
+  }
+  if(window.innerWidth<=width_value || window.innerHeight<=heigth_value){
+    leftof = board.getBoundingClientRect().left;
+    space=space-1;
+    toleft = players.length-5;
+  }else{
+    leftof = board.getBoundingClientRect().left + 4;
   }
   for (i = 0; i < players.length; i++) {
     thepr = document.getElementById(players[i]);
-    thepr.style.transition = "top 0.4s ease-in-out, left 0.4s ease-in-out, transform 0.2s ease-in-out";
+    thepr.style.transition = "transform 0.2s ease-in-out";
     left_value = x + leftof - (players.length + toleft);
     thepr.style.transform = "scale(" + scale + ")";
     thepr.style.left = left_value + dist + "px";
@@ -428,6 +490,10 @@ function winner_check(Player_id){
     winner=player_details[Player_id]["Color"];
     result.push(player_details[Player_id]["Player_Name"])
     pop_array(winner[0],player_details[Player_id]["Player_Name"])
+    Won++;
+    winner_box=document.getElementById(winner+"-Win")
+    winner_box.style.backgroundImage="url(Images/Other/Winner"+Won+".png)";
+    winner_box.style.display="grid";
     console.log(player_details[Player_id]["Player_Name"]+"  "+player_details[Player_id]["Color"]+" Player Won")
   }
 }
@@ -467,6 +533,7 @@ function Player_selection(){
 
 
 function undice(Mode){
+  dice_throw=true
   if(Mode==1 && thenumber!=6){
     Selected_Player++;
     if(Selected_Player>=move_pattern.length){
@@ -477,16 +544,24 @@ function undice(Mode){
   Player_selection()
 }
 
+h=-1;
+diceY=[6,1]
 function dice(){
   num_players = Object.keys(player_details).length;
-  if(!next_move){
+  if(dice_throw){
+    dice_throw = false;
     // thenumber=Math.random() < 0.5 ? 1 : 6;
     thenumber=Math.floor(Math.random() * 6) + 1;
+
+    // h++
+    // if(h>=diceY.length){
+    //   h=0
+    // }
+    // thenumber=diceY[h]
     
     diceset(thenumber);
     setTimeout(()=>{
       document.getElementById("dice").src="Images/Dice/D"+thenumber+".png"
-      next_move = true;
       flag=0;
       count=0;
       if(thenumber!=6){
@@ -527,7 +602,7 @@ function dice(){
         }
       }
       if(flag==0){
-        next_move=false
+        dice_throw=true
         Selected_Player++;
         if(Selected_Player>=move_pattern.length){
           Selected_Player=0
@@ -564,6 +639,7 @@ function diceset(final_num){
         dice_image.src="Images/Dice/D"+image_t+".png";
         if(k==12){
           dice_spin.classList.remove("Spin")
+          next_move=true
         }
       },k*70)
       
@@ -572,15 +648,44 @@ function diceset(final_num){
 }
 
 function result_show(){
-  console.log("--------------")
-  console.log("<---Winners--->")
+  result.push(added_player[0])
+  document.getElementById("results-out").style.display="grid";
+  num_players = Object.keys(player_details).length;
   for(i=0;i<result.length;i++){
-    console.log("--------------")
-    console.log("W"+(i+1)+". "+result[i])
+
+    for(ka=0;ka<num_players;ka++){
+      id="P"+ka
+      if(player_details[id]['Player_Name']==result[i]){
+        color=player_details[id]['Color']
+        break
+      }
+    }
+    
+    const Result_tr = document.createElement("tr");
+
+    const Result_td1 = document.createElement("td");
+    Result_td1.innerHTML=i+1;
+
+    const Result_td2 = document.createElement("td");
+    const text = document.createTextNode(result[i]);
+    const Result_tdimg = document.createElement("img");
+    Result_tdimg.src="Images/Player/"+color+".png"
+    Result_td2.appendChild(Result_tdimg)
+    Result_td2.appendChild(text)
+
+    const Result_td3 = document.createElement("td");
+    if(i<result.length-1){
+      Result_td3.innerHTML="Winner";
+    }else{
+      Result_td3.innerHTML="Loser";
+    }
+    
+
+    Result_tr.appendChild(Result_td1)
+    Result_tr.appendChild(Result_td2)
+    Result_tr.appendChild(Result_td3)
+
+    document.getElementById('result_out').appendChild(Result_tr)
   }
-  console.log("--------------")
-  console.log("L"+(i+1)+". "+added_player[0])
-  console.log("--------------")
-  console.log("..............")
 }
 
