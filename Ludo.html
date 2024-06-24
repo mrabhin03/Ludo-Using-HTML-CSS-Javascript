@@ -7,6 +7,19 @@
     <title>Ludo</title>
 </head>
 <body>
+    <div class="Player-Create">
+        <div class="create-menu">
+            <h2>Choose Color and Name</h2>
+            <div class="selecter-main" id="players-alr">                
+            </div>
+            <div class="number-player">
+                <button onclick="player_control(2)">2 Players</button>
+                <button onclick="player_control(3)" >3 Players</button>
+                <button onclick="player_control(4)">4 Players</button>
+            </div>
+        </div>
+        <button class="play_game" onclick="play_game()">Play</button>
+    </div>
     <header >Ludo</header>
     <section>
         <div id="results-out" class="results-main">
@@ -186,8 +199,7 @@
 <script src="Ludo.js"></script>
 <script>
     // alert(window.innerHeight+" "+window.innerWidth)
-    player_numbers()
-    thescreensize()
+    player_control(2)
     document.addEventListener('DOMContentLoaded', (event) => {
         document.addEventListener('keydown', function(event) {
             if (event.code === 'Space') {

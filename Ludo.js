@@ -11,16 +11,19 @@ width_value=620;
 
 
 Selected_Player=0;
-move_pattern=['B','R','G','Y'];
+default_move_pattern=['B','R','G','Y'];
+move_pattern=[];
 
+player_names=[]
 
 bgcolorin=10;
 bgcolorout=600
 
 const colors = {"Blue":"rgb(200, 220, 270)","Red":"rgb(270, 200, 200)","Green":"rgb(200, 270, 238)","Yellow":"rgb(230, 242, 200)"}
+player_color=["Blue","Red","Green","Yellow"]
 
 next_move = false;
-dice_throw=true
+dice_throw=false
 
 var result=[];
 var added_player=[]
@@ -280,8 +283,8 @@ function player_create() {
   for (box = 0; box < Player_values.length; box++) {
     color = Player_values[box][0].split("-");
     playersbox = document.querySelectorAll("#" + Player_values[box][0]);
-    play_value=document.getElementById("player-"+color[1]+"-Title").innerHTML="Player"+(box+1);
-    added_player.push("Player"+(box+1))
+    play_value=document.getElementById("player-"+color[1]+"-Title").innerHTML=player_names[box];
+    added_player.push(player_names[box])
     temp_num=0
     for (i = 0; i < playersbox.length; i++) {
       const parentRect = playersbox[i].parentElement.getBoundingClientRect();
@@ -313,7 +316,7 @@ function player_create() {
         ID: id,
         Position_Num:temp_num,
         Player: Player_values[box][3],
-        Player_Name:"Player"+(box+1),
+        Player_Name:player_names[box],
         Initial_Position: Player_values[box][4],
         Current_Location: 0,
         Y_Axis: y + topof,
@@ -329,6 +332,7 @@ function player_create() {
   }
   Player_selection()
   thescreensize()
+  dice_throw=true
 }
 
 function pop_array(ThePR,Name){
@@ -689,3 +693,133 @@ function result_show(){
   }
 }
 
+
+var previous=2;
+function player_control(Num) {
+  const container = document.getElementById('players-alr');
+  count = document.querySelectorAll(".players-image").length;
+  Player_in=[]
+  for(i=0;i<count;i++){
+    Player_in.push(document.getElementById("Player"+(i+1)+"-in-value").value)
+  }
+  if(previous==4){
+    container.innerHTML="";
+    count=0
+  }
+  if(Num==4){
+    container.innerHTML="";
+    for(i=0;i<4;i++){
+      const playerSelectorHTML = `
+        <div id="player${i+1}-selector">
+            <div class="players-image" id="player${i+1}-images">
+                <img class="select-image" id="Yellow" src="Images/Player/${player_color[i]}.png" alt="Player Yellow" srcset="">
+            </div>
+            <input type="text" id="Player${i+1}-in-value" value="Player${i+1}">
+        </div>`;
+        container.innerHTML += playerSelectorHTML;
+    }
+    for(i=0;i<count;i++){
+      document.getElementById("Player"+(i+1)+"-in-value").value=Player_in[i]
+    }
+  }else{
+    if (Num > count) {
+        for (let i = count; i < Num; i++) {
+            const playerSelectorHTML = `
+            <div id="player${i+1}-selector">
+                <div class="players-image" id="player${i+1}-images">
+                    <img class="select-image" onclick="color_selector(this,${i+1})" id="Blue" src="Images/Player/Blue.png" alt="Player Blue" srcset="">
+                    <img class="select-image" onclick="color_selector(this,${i+1})" id="Red" src="Images/Player/Red.png" alt="Player Red" srcset="">
+                    <img class="select-image" onclick="color_selector(this,${i+1})" id="Green" src="Images/Player/Green.png" alt="Player Green" srcset="">
+                    <img class="select-image" onclick="color_selector(this,${i+1})" id="Yellow" src="Images/Player/Yellow.png" alt="Player Yellow" srcset="">
+                </div>
+                <input type="text" id="Player${i+1}-in-value" value="Player${i+1}">
+            </div>`;
+            container.innerHTML += playerSelectorHTML;
+            parent=document.getElementById("player"+(i+1)+"-images");
+            newcolor=color_chooser((i+1),0)
+          parent.querySelector("#"+newcolor).classList.add('Select')
+        }
+        if(previous==4){
+          count = document.querySelectorAll(".players-image").length;
+        }
+        for(i=0;i<count;i++){
+          document.getElementById("Player"+(i+1)+"-in-value").value=Player_in[i]
+        }
+    } else if (Num < count) {
+        for (let i = count; i > Num; i--) {
+            const playerElement = document.getElementById(`player${i}-selector`);
+            if (playerElement) {
+                playerElement.remove();
+            }
+        }
+    }
+  }
+  previous=Num
+}
+
+
+function color_selector(object,num){
+  parent=document.getElementById("player"+(num)+"-images");
+  images=parent.querySelectorAll(".select-image");
+  for(i=0;i<images.length;i++){
+    images[i].classList.remove("Select")
+  }
+  object.classList.add("Select")
+  color=object.id
+  imgs=document.querySelectorAll(".players-image").length;
+  for(i=0;i<imgs;i++){
+    if(i+1!=num){
+      parent=document.getElementById("player"+(i+1)+"-images");
+      old=parent.querySelector("#"+color)
+      if (old.classList.contains('Select')) {
+        old.classList.remove('Select')
+        newcolor=color_chooser((i+1),0)
+        parent.querySelector("#"+newcolor).classList.add('Select')
+        break;
+      }
+    }
+  }
+}
+
+function color_chooser(num,index){
+  imgs=document.querySelectorAll(".players-image").length;
+  newcolor=player_color[index];
+  for(j=0;j<imgs;j++){
+    if(j+1!=num){
+      newparent=document.getElementById("player"+(j+1)+"-images");
+      old1=newparent.querySelector("#"+player_color[index])
+      if (old1.classList.contains('Select')) {
+        newcolor=color_chooser(num,(index+1))
+        break;
+      }
+    }
+  }
+  return newcolor;
+}
+
+
+function play_game(){
+  count = document.querySelectorAll(".players-image").length;
+  for(i=0;i<count;i++){
+    value_data=document.getElementById("Player"+(i+1)+"-in-value").value
+    player_names.push(value_data)
+  }
+  if(count==4){
+    move_pattern=default_move_pattern
+  }else{
+    for(i=0;i<count;i++){
+      parent=document.getElementById("player"+(i+1)+"-images")
+      images=parent.querySelectorAll(".select-image")
+      for(j=0;j<images.length;j++){
+        if (images[j].classList.contains('Select')) {
+          color=images[j].id
+          move_pattern.push(color[0])
+        }
+      }
+    }
+  }
+  
+  document.querySelector(".Player-Create").style.display="none";
+  player_numbers()
+  thescreensize()
+}
