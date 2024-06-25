@@ -282,7 +282,7 @@ body footer{
     border-radius: 10px;
     width: 300px;
     height: fit-content;
-    background-color: rgb(255, 0, 0);
+    background-color: white;
     padding: 10px;
     box-shadow: 5px 5px 20px black;
 }
