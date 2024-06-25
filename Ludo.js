@@ -256,7 +256,6 @@ function thescreensize() {
       movement(object,Position)
       object.style.transition = "all 0s";
       rearrage(player_details[id]['Current_Location'])
-      console.log(player_details[id]['Current_Location'])
     }else{
       object.style.top = player_details[id]['Y_Axis'] + "px";
       object.style.left = player_details[id]['X_Axis'] + "px";
@@ -474,7 +473,6 @@ function rearrage(objectid) {
   for (i = 0; i < players.length; i++) {
     thepr = document.getElementById(players[i]);
     player_details[players[i]]["Collision"]=scale
-    console.log(players[i]+" "+player_details[players[i]]["Collision"])
     thepr.style.transition = "transform 0.2s ease-in-out";
     left_value = x + leftof - (players.length + toleft);
     thepr.style.transform = "scale(" + scale + ")";
@@ -851,20 +849,36 @@ function play_game(){
 
 function available_moves(Pr_id_ar,Mode){
   if(Mode==0){
+    value=(document.getElementById('board').offsetWidth)-40
     for(tr1=0;tr1<Pr_id_ar.length;tr1++){
-      console.log(player_details[Pr_id_ar[tr1]]["Collision"])
       const object = document.getElementById(Pr_id_ar[tr1]);
       const rect = object.getBoundingClientRect();
       select=document.createElement('div')
       select.className = "selected-player";
-      select.style.top=((rect.top)+18)+"px";
-      select.style.left=((rect.left)+3.5)+"px";
+      if(value>350){
+        topoffset=((rect.top)+35);
+        leftoffset=((rect.left)+9.43);
+        if(player_details[Pr_id_ar[tr1]]["Collision"]!=1){
+          topoffset=topoffset-9;
+          leftoffset=leftoffset-2.5
+          // select.style.transform="scale("+(player_details[Pr_id_ar[tr1]]["Collision"]-.2)+")"
+        } 
+      }else{
+        topoffset=((rect.top)+18);
+        leftoffset=((rect.left)+3.5);
+        if(player_details[Pr_id_ar[tr1]]["Collision"]!=1){
+          topoffset=topoffset-5;
+          leftoffset=leftoffset-1.5
+          select.style.transform="scale("+(player_details[Pr_id_ar[tr1]]["Collision"]-.2)+")"
+        } 
+      }
+      
       select.style.transform="scale("+player_details[Pr_id_ar[tr1]]["Collision"]+")"
-      if(player_details[Pr_id_ar[tr1]]["Collision"]!=1){
-        select.style.top=((rect.top)+13)+"px";
-        select.style.left=((rect.left)+2)+"px";
-        select.style.transform="scale("+(player_details[Pr_id_ar[tr1]]["Collision"]-.2)+")"
-      }  
+      
+
+      select.style.top=topoffset+"px";
+      select.style.left=leftoffset+"px";
+
       if(player_details[Pr_id_ar[tr1]]['Moved']==0 || 
         player_details[Pr_id_ar[tr1]]['Initial_Position']==player_details[Pr_id_ar[tr1]]['Current_Location'] ||
         player_details[Pr_id_ar[tr1]]['Moved']>51){
