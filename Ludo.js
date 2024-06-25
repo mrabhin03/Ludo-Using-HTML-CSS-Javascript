@@ -856,6 +856,7 @@ function available_moves(Pr_id_ar,Mode){
       select=document.createElement('div')
       select.className = "selected-player";
       if(value>350){
+        br=2
         topoffset=((rect.top)+35);
         leftoffset=((rect.left)+9.43);
         if(player_details[Pr_id_ar[tr1]]["Collision"]!=1){
@@ -863,17 +864,19 @@ function available_moves(Pr_id_ar,Mode){
           leftoffset=leftoffset-2.5
           // select.style.transform="scale("+(player_details[Pr_id_ar[tr1]]["Collision"]-.2)+")"
         } 
+        // select.style.transform="scale(20)"
       }else{
+        br=1.5
         topoffset=((rect.top)+18);
         leftoffset=((rect.left)+3.5);
+        // select.style.transform="scale("+player_details[Pr_id_ar[tr1]]["Collision"]+")"
         if(player_details[Pr_id_ar[tr1]]["Collision"]!=1){
           topoffset=topoffset-5;
           leftoffset=leftoffset-1.5
-          select.style.transform="scale("+(player_details[Pr_id_ar[tr1]]["Collision"]-.2)+")"
+          // select.style.transform="scale("+(player_details[Pr_id_ar[tr1]]["Collision"]-.2)+")"
         } 
       }
       
-      select.style.transform="scale("+player_details[Pr_id_ar[tr1]]["Collision"]+")"
       
 
       select.style.top=topoffset+"px";
@@ -882,9 +885,9 @@ function available_moves(Pr_id_ar,Mode){
       if(player_details[Pr_id_ar[tr1]]['Moved']==0 || 
         player_details[Pr_id_ar[tr1]]['Initial_Position']==player_details[Pr_id_ar[tr1]]['Current_Location'] ||
         player_details[Pr_id_ar[tr1]]['Moved']>51){
-        select.style.border="1.5px solid white"
+        select.style.border=br+"px solid white"
       }else{
-        select.style.border="1.5px solid rgb(0, 0, 0)"
+        select.style.border=br+"px solid rgb(0, 0, 0)"
       }
       document.body.appendChild(select)
     }

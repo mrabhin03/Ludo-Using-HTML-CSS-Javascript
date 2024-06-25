@@ -96,16 +96,24 @@ body footer{
     place-items: center;
 }
 
-.ludo-board .home-base.red, .ludo-board .home-base.red .base>div,.red{
+.ludo-board .home-base.red, 
+.ludo-board .home-base.red .base>div,
+.red{
     background-color: var(--RED) !important;
 }
-.ludo-board .home-base.green, .ludo-board .home-base.green .base>div,.green{
+.ludo-board .home-base.green, 
+.ludo-board .home-base.green .base>div,
+.green{
     background-color: var(--GREEN) !important;
 }
-.ludo-board .home-base.blue, .ludo-board .home-base.blue .base>div,.blue{
+.ludo-board .home-base.blue, 
+.ludo-board .home-base.blue .base>div,
+.blue{
     background-color: var(--BLUE) !important;
 }
-.ludo-board .home-base.yellow, .ludo-board .home-base.yellow .base>div,.yellow{
+.ludo-board .home-base.yellow, 
+.ludo-board .home-base.yellow .base>div,
+.yellow{
     background-color: var(--YELLOW) !important;
 }
 .ludo-board .home-base.red,
@@ -170,10 +178,10 @@ body footer{
 
 @keyframes spin-select {
     from{
-        transform: rotate(0deg);
+        transform: rotate(0deg) scale(1.2);
     }
     to{
-        transform: rotate(360deg);
+        transform: rotate(360deg) scale(1.2);
     }
 }
 .player{
