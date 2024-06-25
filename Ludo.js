@@ -44,6 +44,7 @@ function move_object(object) {
     if (player_details[theobject_id]["Status"] == 1) {
       object.style.transition = "top .5s ease-in-out, left .5s ease-in-out, transform 0.1s ease-in-out";
       object.style.transform = "scale(1)";
+      available_moves(0,1)
       if (player_details[theobject_id]["Current_Location"] == 0) {
         if(thenumber==6){
             player_details[theobject_id]["Current_Location"] = num =
@@ -324,6 +325,7 @@ function player_create() {
         Moved: 0,
         Status: 1,
         Color:color[1],
+        Collision:1
       };
       theplayer++;
       temp_num++;
@@ -456,6 +458,7 @@ function rearrage(objectid) {
     space = 3;
     toleft = 3;
   } else {
+    
     scale = .8;
     hie = players.length + 2;
     space = 6;
@@ -470,6 +473,8 @@ function rearrage(objectid) {
   }
   for (i = 0; i < players.length; i++) {
     thepr = document.getElementById(players[i]);
+    player_details[players[i]]["Collision"]=scale
+    console.log(players[i]+" "+player_details[players[i]]["Collision"])
     thepr.style.transition = "transform 0.2s ease-in-out";
     left_value = x + leftof - (players.length + toleft);
     thepr.style.transform = "scale(" + scale + ")";
@@ -508,7 +513,10 @@ function Player_selection(){
   num_players = Object.keys(player_details).length;
   flag=0
   if(move_pattern.length<=1){
-    result_show()
+    setTimeout(()=>{
+      result_show()
+    },800)
+    
     return;
   }
   var Color
@@ -562,7 +570,8 @@ function dice(){
     //   h=0
     // }
     // thenumber=diceY[h]
-    
+
+    temp_id=[]
     diceset(thenumber);
     setTimeout(()=>{
       document.getElementById("dice").src="Images/Dice/D"+thenumber+".png"
@@ -576,6 +585,7 @@ function dice(){
               if((player_details[id]['Moved']+thenumber)<=57){
                 flag=1;
                 document.getElementById(id).style.pointerEvents= "all";
+                temp_id.push(id)
                 count++;
                 obj=document.getElementById(id)
               }else{
@@ -594,6 +604,7 @@ function dice(){
               if((player_details[id]['Moved']+thenumber)<=57){
                 flag=1;
                 document.getElementById(id).style.pointerEvents= "all";
+                temp_id.push(id)
                 count++;
                 obj=document.getElementById(id)
               }else{
@@ -616,6 +627,10 @@ function dice(){
       }else{
         if(count==1){
           move_object(obj)
+        }else{
+          if(count!=0){
+            available_moves(temp_id,0)
+          }
         }
       }
       
@@ -678,6 +693,7 @@ function result_show(){
     const text = document.createTextNode(result[i].slice(0, 10));
     const Result_tdimg = document.createElement("img");
     Result_tdimg.src="Images/Player/"+color+".png"
+    Result_tdimg.loading="lazy"
     Result_td2.appendChild(Result_tdimg)
     Result_td2.appendChild(text)
 
@@ -830,4 +846,39 @@ function play_game(){
   document.querySelector(".Player-Create").style.display="none";
   player_numbers()
   thescreensize()
+}
+
+
+function available_moves(Pr_id_ar,Mode){
+  if(Mode==0){
+    for(tr1=0;tr1<Pr_id_ar.length;tr1++){
+      console.log(player_details[Pr_id_ar[tr1]]["Collision"])
+      const object = document.getElementById(Pr_id_ar[tr1]);
+      const rect = object.getBoundingClientRect();
+      select=document.createElement('div')
+      select.className = "selected-player";
+      select.style.top=((rect.top)+18)+"px";
+      select.style.left=((rect.left)+3.5)+"px";
+      select.style.transform="scale("+player_details[Pr_id_ar[tr1]]["Collision"]+")"
+      if(player_details[Pr_id_ar[tr1]]["Collision"]!=1){
+        select.style.top=((rect.top)+13)+"px";
+        select.style.left=((rect.left)+2)+"px";
+        select.style.transform="scale("+(player_details[Pr_id_ar[tr1]]["Collision"]-.2)+")"
+      }  
+      if(player_details[Pr_id_ar[tr1]]['Moved']==0 || 
+        player_details[Pr_id_ar[tr1]]['Initial_Position']==player_details[Pr_id_ar[tr1]]['Current_Location'] ||
+        player_details[Pr_id_ar[tr1]]['Moved']>51){
+        select.style.border="1.5px solid white"
+      }else{
+        select.style.border="1.5px solid rgb(0, 0, 0)"
+      }
+      document.body.appendChild(select)
+    }
+  }else{
+    spins=document.querySelectorAll(".selected-player")
+    for(re=0;re<spins.length;re++){
+      spins[re].remove()
+    }
+  }
+  
 }

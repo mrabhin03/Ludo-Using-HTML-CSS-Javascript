@@ -156,7 +156,25 @@ body footer{
 .winner-base .win div{
     box-shadow: 0px 0px 1px black;
 }
+.selected-player{
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid rgb(0, 0, 0);
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0) !important;
+    border-top: 1.5px solid rgba(255, 255, 255, 0) !important;
+    animation: spin-select 1s linear infinite;
+}
 
+@keyframes spin-select {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
 .player{
     height: fit-content;
     width: 27px;
@@ -174,6 +192,7 @@ body footer{
     z-index: 50;
 }
 .dice-throw{
+    cursor: pointer;
     background-color: red;
     height: 100px;
     width: 100px;
@@ -284,7 +303,7 @@ body footer{
     height: fit-content;
     background-color: white;
     padding: 10px;
-    box-shadow: 5px 5px 20px black;
+    box-shadow: 5px 5px 0px rgb(5, 81, 135);
 }
 .create-menu h2{
     margin: 0;
@@ -318,6 +337,7 @@ body footer{
     border: 1.5px solid black;
     border-radius: 3px;
     background-color: rgb(218, 247, 255);
+    box-shadow: 2px 2px 0px black;
 }
 .number-player>button:hover{
     background-color: white;
@@ -341,10 +361,11 @@ body footer{
 .select-image{
     cursor: pointer;
     height: 100%;
+    transition: all .2s ease-in-out;
 }
 .select-image.Select{
     transform: scale(1.35);
-    filter: drop-shadow(0px 0px 1px black);
+    filter: drop-shadow(1px 1px 0px black);
 }
 .selecter-main >div>input{
     height: 100%;
@@ -366,7 +387,7 @@ body footer{
     border: none;
     height: 25px;
     cursor: pointer;
-    box-shadow: 5px 5px 9px black;
+    box-shadow: 5px 5px 0px rgb(5, 81, 135);
 }
 .play_game:hover{
     background-color: rgb(212, 212, 212);
