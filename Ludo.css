@@ -225,13 +225,14 @@ body footer{
     align-items: center;
     justify-content: baseline;
     flex-direction: column;
-    font-family: cursive;
-    font-weight: 100;
+    font-family: sans-serif;
+    font-weight: 400;
     height: fit-content;
     padding: 10px 20px 30px 20px;
     width: 250px;
     border-radius: 10px;
     background-color: white;
+    box-shadow: 10px 10px 20px black;
 }
 .results>h5{
     font-size: 30px;
@@ -246,8 +247,11 @@ body footer{
     border-bottom: 4px solid black;
 }
 .the-result tr td{
-    text-align: center;
-    
+    text-align: end;
+}
+.the-result tr td:nth-child(2){
+    text-align: left;
+    padding-left: 20px;
 }
 .the-result tr td p{
     margin: 0;
@@ -258,9 +262,10 @@ body footer{
     margin-bottom: -4px;
 }
 .Player-Create{
+    font-family: sans-serif;
     gap: 10px;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgb(15, 199, 255);
     position: absolute;
     z-index: 90;
@@ -279,6 +284,7 @@ body footer{
     height: fit-content;
     background-color: white;
     padding: 10px;
+    box-shadow: 5px 5px 20px black;
 }
 .create-menu h2{
     margin: 0;
@@ -347,10 +353,12 @@ body footer{
     padding: 0;
     border: none;
     text-align: center;
+    border: 1.3px solid black;
+    border-radius: 14px;
 }
 .selecter-main >div>input:focus {
     outline: none;
-    border: none;
+    border: 1.3px solid black;
 }
 .play_game{
     width: 300px;
@@ -358,6 +366,7 @@ body footer{
     border: none;
     height: 25px;
     cursor: pointer;
+    box-shadow: 5px 5px 9px black;
 }
 .play_game:hover{
     background-color: rgb(212, 212, 212);

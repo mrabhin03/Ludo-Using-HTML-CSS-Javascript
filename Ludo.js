@@ -668,10 +668,14 @@ function result_show(){
     const Result_tr = document.createElement("tr");
 
     const Result_td1 = document.createElement("td");
-    Result_td1.innerHTML=i+1;
+    const Result_tdimgcr = document.createElement("img");
+      Result_tdimgcr.src="Images/Other/Winner"+(i+1)+".png"
+      Result_tdimgcr.style.transform="scale(2.4)"
+      Result_td1.appendChild(Result_tdimgcr)
+
 
     const Result_td2 = document.createElement("td");
-    const text = document.createTextNode(result[i]);
+    const text = document.createTextNode(result[i].slice(0, 10));
     const Result_tdimg = document.createElement("img");
     Result_tdimg.src="Images/Player/"+color+".png"
     Result_td2.appendChild(Result_tdimg)
@@ -802,6 +806,10 @@ function play_game(){
   count = document.querySelectorAll(".players-image").length;
   for(i=0;i<count;i++){
     value_data=document.getElementById("Player"+(i+1)+"-in-value").value
+    if(value_data==''){
+      value_data="Player"+(i+1)
+    }
+    value_data=value_data.slice(0, 15)
     player_names.push(value_data)
   }
   if(count==4){
