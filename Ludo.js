@@ -731,10 +731,10 @@ function player_control(Num) {
             const playerSelectorHTML = `
             <div id="player${i+1}-selector">
                 <div class="players-image" id="player${i+1}-images">
-                    <img class="select-image" onclick="color_selector(this,${i+1})" id="Blue" src="Images/Player/Blue.png" alt="Player Blue" srcset="">
-                    <img class="select-image" onclick="color_selector(this,${i+1})" id="Red" src="Images/Player/Red.png" alt="Player Red" srcset="">
-                    <img class="select-image" onclick="color_selector(this,${i+1})" id="Green" src="Images/Player/Green.png" alt="Player Green" srcset="">
-                    <img class="select-image" onclick="color_selector(this,${i+1})" id="Yellow" src="Images/Player/Yellow.png" alt="Player Yellow" srcset="">
+                    <img class="select-image" loading="lazy" onclick="color_selector(this,${i+1})" id="Blue" src="Images/Player/Blue.png" alt="Player Blue" srcset="">
+                    <img class="select-image" loading="lazy" onclick="color_selector(this,${i+1})" id="Red" src="Images/Player/Red.png" alt="Player Red" srcset="">
+                    <img class="select-image" loading="lazy" onclick="color_selector(this,${i+1})" id="Green" src="Images/Player/Green.png" alt="Player Green" srcset="">
+                    <img class="select-image" loading="lazy" onclick="color_selector(this,${i+1})" id="Yellow" src="Images/Player/Yellow.png" alt="Player Yellow" srcset="">
                 </div>
                 <input type="text" id="Player${i+1}-in-value" value="Player${i+1}">
             </div>`;
